@@ -4,9 +4,12 @@ import { TimeKeeper } from '@/components/TimeKeeper';
 
 const Index = () => {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8 text-center">Voice of Time Keeper</h1>
+    <div className="container mx-auto px-4 py-12 min-h-screen flex flex-col items-center justify-center">
+      <h1 className="text-4xl font-bold mb-10 text-center text-gradient animate-fade-in">Voice of Time Keeper</h1>
       <TimeKeeper />
+      <p className="text-muted-foreground text-sm mt-8 text-center animate-fade-in">
+        Record your voice as alarm sounds and reminders
+      </p>
     </div>
   );
 };
