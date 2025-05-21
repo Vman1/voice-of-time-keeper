@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
@@ -128,8 +127,7 @@ export function CalendarView() {
     <div className="p-6 animate-fade-in">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="glass-card rounded-lg p-4">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-display font-bold text-foreground">Your Calendar</h2>
+          <div className="flex justify-center items-center mb-6">
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
               <DialogTrigger asChild>
                 <Button variant="outline" className="text-foreground gap-2">
