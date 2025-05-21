@@ -5,14 +5,12 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { Calendar as CalendarIcon, Mic, Square, Plus } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
-
 interface Reminder {
   date: Date;
   time: string;
   audioUrl: string;
   note: string;
 }
-
 export function CalendarView() {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [time, setTime] = useState('');
@@ -22,19 +20,20 @@ export function CalendarView() {
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
   const [reminders, setReminders] = useState<Reminder[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
-  
   const startRecording = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: true
+      });
       const recorder = new MediaRecorder(stream);
       const audioChunks: BlobPart[] = [];
-      
       recorder.addEventListener("dataavailable", event => {
         audioChunks.push(event.data);
       });
-      
       recorder.addEventListener("stop", () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
+        const audioBlob = new Blob(audioChunks, {
+          type: 'audio/mp3'
+        });
         const audioUrl = URL.createObjectURL(audioBlob);
         setRecordedAudio(audioUrl);
         toast({
@@ -42,11 +41,9 @@ export function CalendarView() {
           description: "Your reminder message has been recorded"
         });
       });
-      
       recorder.start();
       setMediaRecorder(recorder);
       setRecording(true);
-      
     } catch (err) {
       console.error("Error accessing microphone:", err);
       toast({
@@ -56,14 +53,12 @@ export function CalendarView() {
       });
     }
   };
-  
   const stopRecording = () => {
     if (mediaRecorder) {
       mediaRecorder.stop();
       setRecording(false);
     }
   };
-  
   const addReminder = () => {
     if (!date) {
       toast({
@@ -73,7 +68,6 @@ export function CalendarView() {
       });
       return;
     }
-    
     if (!time) {
       toast({
         title: "No time selected",
@@ -82,7 +76,6 @@ export function CalendarView() {
       });
       return;
     }
-    
     if (!recordedAudio) {
       toast({
         title: "No recording",
@@ -91,42 +84,33 @@ export function CalendarView() {
       });
       return;
     }
-    
     const newReminder: Reminder = {
       date: date,
       time: time,
       audioUrl: recordedAudio,
       note: note
     };
-    
     setReminders([...reminders, newReminder]);
     setDialogOpen(false);
     setNote('');
     setTime('');
     setRecordedAudio(null);
-    
     toast({
       title: "Reminder added",
       description: `Your reminder is set for ${format(date, 'PPP')} at ${time}`
     });
   };
-  
   const getTodaysReminders = () => {
     if (!date) return [];
-    return reminders.filter(reminder => 
-      format(reminder.date, 'yyyy-MM-dd') === format(date, 'yyyy-MM-dd')
-    );
+    return reminders.filter(reminder => format(reminder.date, 'yyyy-MM-dd') === format(date, 'yyyy-MM-dd'));
   };
-  
   const playReminder = (audioUrl: string) => {
     const audio = new Audio(audioUrl);
     audio.play();
   };
-  
-  return (
-    <div className="p-6 animate-fade-in">
+  return <div className="p-6 animate-fade-in">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="glass-card rounded-lg p-4">
+        <div className="glass-card p-4 rounded-lg">
           <div className="flex justify-center items-center mb-6">
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
               <DialogTrigger asChild>
@@ -146,59 +130,37 @@ export function CalendarView() {
                   <div>
                     <label className="block text-sm font-medium mb-2 text-foreground">Date</label>
                     <div className="border border-white/20 rounded-md bg-secondary/10 overflow-hidden">
-                      <Calendar 
-                        mode="single" 
-                        selected={date} 
-                        onSelect={setDate} 
-                        className="bg-transparent w-full"
-                      />
+                      <Calendar mode="single" selected={date} onSelect={setDate} className="bg-transparent w-full" />
                     </div>
                   </div>
                   
                   <div>
                     <label className="block text-sm font-medium mb-2 text-foreground">Time</label>
-                    <input 
-                      type="time" 
-                      value={time} 
-                      onChange={(e) => setTime(e.target.value)}
-                      className="w-full p-2 bg-secondary/30 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-foreground"
-                    />
+                    <input type="time" value={time} onChange={e => setTime(e.target.value)} className="w-full p-2 bg-secondary/30 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-foreground" />
                   </div>
                   
                   <div>
                     <label className="block text-sm font-medium mb-2 text-foreground">Note (optional)</label>
-                    <input 
-                      type="text" 
-                      value={note} 
-                      onChange={(e) => setNote(e.target.value)}
-                      placeholder="Add a note"
-                      className="w-full p-2 bg-secondary/30 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-foreground"
-                    />
+                    <input type="text" value={note} onChange={e => setNote(e.target.value)} placeholder="Add a note" className="w-full p-2 bg-secondary/30 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-foreground" />
                   </div>
                   
                   <div>
                     <label className="block text-sm font-medium mb-2 text-foreground">Record Message</label>
                     <div className="flex gap-4">
-                      {recording ? (
-                        <Button onClick={stopRecording} variant="destructive" className="text-destructive-foreground w-full">
+                      {recording ? <Button onClick={stopRecording} variant="destructive" className="text-destructive-foreground w-full">
                           <Square className="mr-2 h-4 w-4" />
                           Stop Recording
-                        </Button>
-                      ) : (
-                        <Button onClick={startRecording} className="text-foreground w-full">
+                        </Button> : <Button onClick={startRecording} className="text-foreground w-full">
                           <Mic className="mr-2 h-4 w-4" />
                           Record Voice
-                        </Button>
-                      )}
+                        </Button>}
                     </div>
                   </div>
                   
-                  {recordedAudio && (
-                    <div>
+                  {recordedAudio && <div>
                       <label className="block text-sm font-medium mb-2 text-foreground">Preview Recording</label>
                       <audio controls src={recordedAudio} className="w-full rounded-md bg-secondary/20 border border-white/10" />
-                    </div>
-                  )}
+                    </div>}
                   
                   <Button onClick={addReminder} className="text-foreground w-full mt-2">
                     Add Reminder
@@ -209,12 +171,7 @@ export function CalendarView() {
           </div>
           
           <div className="bg-secondary/20 backdrop-blur-sm border border-white/20 rounded-lg p-1">
-            <Calendar 
-              mode="single" 
-              selected={date} 
-              onSelect={setDate}
-              className="w-full"
-            />
+            <Calendar mode="single" selected={date} onSelect={setDate} className="w-full" />
           </div>
         </div>
         
@@ -225,9 +182,7 @@ export function CalendarView() {
           </h2>
           
           <div className="space-y-4 max-h-[400px] overflow-y-auto pr-1">
-            {getTodaysReminders().length > 0 ? (
-              getTodaysReminders().map((reminder, index) => (
-                <div key={index} className="border border-white/20 rounded-md p-4 bg-secondary/30 backdrop-blur-sm hover:bg-secondary/40 transition-colors">
+            {getTodaysReminders().length > 0 ? getTodaysReminders().map((reminder, index) => <div key={index} className="border border-white/20 rounded-md p-4 bg-secondary/30 backdrop-blur-sm hover:bg-secondary/40 transition-colors">
                   <div className="flex justify-between items-center">
                     <div>
                       <p className="font-medium text-foreground">{reminder.time}</p>
@@ -237,20 +192,15 @@ export function CalendarView() {
                       Play
                     </Button>
                   </div>
-                </div>
-              ))
-            ) : (
-              <div className="flex flex-col items-center justify-center py-12">
+                </div>) : <div className="flex flex-col items-center justify-center py-12">
                 <p className="text-muted-foreground text-center font-body mb-2">No reminders for this date</p>
                 <Button variant="outline" size="sm" onClick={() => setDialogOpen(true)} className="text-foreground">
                   <Plus className="mr-2 h-4 w-4" />
                   Add One
                 </Button>
-              </div>
-            )}
+              </div>}
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 }
