@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
@@ -175,7 +174,7 @@ export function StopWatch() {
             variant="outline"
             size="lg"
             onClick={isRunning ? pauseTimer : startTimer}
-            className="w-full flex items-center gap-2 hover-scale"
+            className="w-full flex items-center gap-2 hover-scale text-foreground"
           >
             {isRunning ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
             {isRunning ? 'Pause' : 'Start'}
@@ -185,7 +184,7 @@ export function StopWatch() {
             variant="outline"
             size="lg"
             onClick={resetTimer}
-            className="w-full flex items-center gap-2 hover-scale"
+            className="w-full flex items-center gap-2 hover-scale text-foreground"
           >
             <Timer className="h-4 w-4" />
             Reset
@@ -215,7 +214,7 @@ export function StopWatch() {
                     onClick={startRecording} 
                     variant="secondary"
                     disabled={audioBlob !== null}
-                    className="w-full"
+                    className="w-full text-secondary-foreground"
                   >
                     Record Custom Sound
                   </Button>
@@ -223,7 +222,7 @@ export function StopWatch() {
                   <Button 
                     onClick={stopRecording} 
                     variant="destructive"
-                    className="w-full animate-pulse"
+                    className="w-full animate-pulse text-destructive-foreground"
                   >
                     Stop Recording
                   </Button>
@@ -242,7 +241,7 @@ export function StopWatch() {
                         }
                       }}
                       variant="outline"
-                      className="w-full"
+                      className="w-full text-foreground"
                     >
                       Test Sound
                     </Button>
@@ -253,7 +252,7 @@ export function StopWatch() {
                       setAudioBlob(null);
                     }}
                     variant="ghost"
-                    className="w-full text-sm"
+                    className="w-full text-sm text-muted-foreground"
                   >
                     Delete Recording
                   </Button>

@@ -135,12 +135,12 @@ export function AlarmClock() {
           <label className="block text-sm font-medium mb-2">Record Alarm Sound</label>
           <div className="flex gap-4 justify-center">
             {recording ? (
-              <Button onClick={stopRecording} variant="destructive" className="hover-scale">
+              <Button onClick={stopRecording} variant="destructive" className="hover-scale text-destructive-foreground">
                 <Square className="mr-2 h-4 w-4" />
                 Stop Recording
               </Button>
             ) : (
-              <Button onClick={startRecording} disabled={alarmSet} className="bg-secondary border border-primary/20 hover:bg-primary/20 hover-scale">
+              <Button onClick={startRecording} disabled={alarmSet} className="bg-secondary border border-primary/20 hover:bg-primary/20 hover-scale text-foreground">
                 <Mic className="mr-2 h-4 w-4" />
                 Record Voice
               </Button>
@@ -157,11 +157,11 @@ export function AlarmClock() {
         
         <div className="w-full flex gap-4">
           {alarmSet ? (
-            <Button onClick={cancelAlarm} variant="destructive" className="w-full hover-scale">
+            <Button onClick={cancelAlarm} variant="destructive" className="w-full hover-scale text-destructive-foreground">
               Cancel Alarm
             </Button>
           ) : (
-            <Button onClick={setAlarm} className="w-full bg-secondary border border-primary/20 hover:bg-primary/20 hover-scale">
+            <Button onClick={setAlarm} className="w-full bg-secondary border border-primary/20 hover:bg-primary/20 hover-scale text-foreground">
               <Bell className="mr-2 h-4 w-4" />
               Set Alarm
             </Button>
