@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
@@ -125,26 +124,26 @@ export function CalendarView() {
   };
   
   return (
-    <div className="p-6">
+    <div className="p-6 animate-fade-in">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white rounded-lg shadow p-4">
+        <div className="glass-card rounded-lg p-4">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold">Calendar</h2>
+            <h2 className="text-xl font-display font-bold text-foreground">Calendar</h2>
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
               <DialogTrigger asChild>
-                <Button>
+                <Button className="text-foreground">
                   <Plus className="mr-2 h-4 w-4" />
                   Add Reminder
                 </Button>
               </DialogTrigger>
-              <DialogContent>
+              <DialogContent className="glass-card border border-white/10">
                 <DialogHeader>
-                  <DialogTitle>Add Voice Reminder</DialogTitle>
+                  <DialogTitle className="font-display text-lg">Add Voice Reminder</DialogTitle>
                 </DialogHeader>
                 <div className="flex flex-col gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2">Date</label>
-                    <div className="border rounded-md p-1">
+                    <label className="block text-sm font-medium mb-2 text-foreground">Date</label>
+                    <div className="border border-white/20 rounded-md p-1">
                       <Calendar 
                         mode="single" 
                         selected={date} 
@@ -155,36 +154,36 @@ export function CalendarView() {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium mb-2">Time</label>
+                    <label className="block text-sm font-medium mb-2 text-foreground">Time</label>
                     <input 
                       type="time" 
                       value={time} 
                       onChange={(e) => setTime(e.target.value)}
-                      className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full p-2 bg-secondary/30 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-foreground"
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium mb-2">Note (optional)</label>
+                    <label className="block text-sm font-medium mb-2 text-foreground">Note (optional)</label>
                     <input 
                       type="text" 
                       value={note} 
                       onChange={(e) => setNote(e.target.value)}
                       placeholder="Add a note"
-                      className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full p-2 bg-secondary/30 border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-foreground"
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium mb-2">Record Message</label>
+                    <label className="block text-sm font-medium mb-2 text-foreground">Record Message</label>
                     <div className="flex gap-4">
                       {recording ? (
-                        <Button onClick={stopRecording} variant="destructive">
+                        <Button onClick={stopRecording} variant="destructive" className="text-destructive-foreground">
                           <Square className="mr-2 h-4 w-4" />
                           Stop Recording
                         </Button>
                       ) : (
-                        <Button onClick={startRecording}>
+                        <Button onClick={startRecording} className="text-foreground">
                           <Mic className="mr-2 h-4 w-4" />
                           Record Voice
                         </Button>
@@ -194,12 +193,12 @@ export function CalendarView() {
                   
                   {recordedAudio && (
                     <div>
-                      <label className="block text-sm font-medium mb-2">Preview Recording</label>
+                      <label className="block text-sm font-medium mb-2 text-foreground">Preview Recording</label>
                       <audio controls src={recordedAudio} className="w-full" />
                     </div>
                   )}
                   
-                  <Button onClick={addReminder}>
+                  <Button onClick={addReminder} className="text-foreground">
                     Add Reminder
                   </Button>
                 </div>
@@ -211,12 +210,12 @@ export function CalendarView() {
             mode="single" 
             selected={date} 
             onSelect={setDate} 
-            className="rounded-md border pointer-events-auto"
+            className="rounded-md border border-white/20 pointer-events-auto bg-secondary/20 backdrop-blur-sm"
           />
         </div>
         
-        <div className="bg-white rounded-lg shadow p-4">
-          <h2 className="text-xl font-bold mb-4 flex items-center">
+        <div className="glass-card rounded-lg p-4">
+          <h2 className="text-xl font-display font-bold mb-4 flex items-center text-foreground">
             <CalendarIcon className="mr-2 h-5 w-5" />
             {date ? format(date, 'PPP') : 'Select a date'}
           </h2>
@@ -224,20 +223,20 @@ export function CalendarView() {
           <div className="space-y-4">
             {getTodaysReminders().length > 0 ? (
               getTodaysReminders().map((reminder, index) => (
-                <div key={index} className="border rounded-md p-4">
+                <div key={index} className="border border-white/20 rounded-md p-4 bg-secondary/30 backdrop-blur-sm">
                   <div className="flex justify-between items-center">
                     <div>
-                      <p className="font-semibold">{reminder.time}</p>
-                      {reminder.note && <p className="text-sm text-gray-600">{reminder.note}</p>}
+                      <p className="font-medium text-foreground">{reminder.time}</p>
+                      {reminder.note && <p className="text-sm text-muted-foreground">{reminder.note}</p>}
                     </div>
-                    <Button variant="outline" size="sm" onClick={() => playReminder(reminder.audioUrl)}>
+                    <Button variant="outline" size="sm" onClick={() => playReminder(reminder.audioUrl)} className="text-foreground">
                       Play
                     </Button>
                   </div>
                 </div>
               ))
             ) : (
-              <p className="text-gray-500 text-center py-8">No reminders for this date</p>
+              <p className="text-muted-foreground text-center py-8 font-body">No reminders for this date</p>
             )}
           </div>
         </div>
