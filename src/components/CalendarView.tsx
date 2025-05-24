@@ -129,7 +129,7 @@ export function CalendarView() {
                 <div className="flex flex-col gap-4">
                   <div>
                     <label className="block text-sm font-medium mb-2 text-foreground">Date</label>
-                    <div className="border border-white/20 rounded-md bg-secondary/10 overflow-hidden">
+                    <div className="rounded-md bg-secondary/10 overflow-hidden">
                       <Calendar mode="single" selected={date} onSelect={setDate} className="bg-transparent w-full" />
                     </div>
                   </div>
@@ -170,7 +170,7 @@ export function CalendarView() {
             </Dialog>
           </div>
           
-          <div className="bg-secondary/20 backdrop-blur-sm border border-white/20 rounded-lg p-1">
+          <div className="bg-secondary/20 backdrop-blur-sm rounded-lg p-1">
             <Calendar mode="single" selected={date} onSelect={setDate} className="w-full" />
           </div>
         </div>
