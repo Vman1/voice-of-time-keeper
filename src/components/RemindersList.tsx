@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Calendar as CalendarIcon, Plus } from 'lucide-react';
+import { Calendar as CalendarIcon, Plus, Play } from 'lucide-react';
 import { format } from 'date-fns';
 
 interface Reminder {
@@ -33,38 +33,50 @@ export function RemindersList({ selectedDate, reminders, onAddReminderClick }: R
   const todaysReminders = getTodaysReminders();
 
   return (
-    <div className="glass-card rounded-lg p-4">
-      <h2 className="text-xl font-display font-bold mb-6 flex items-center text-foreground">
-        <CalendarIcon className="mr-2 h-5 w-5" />
+    <div className="glass-card rounded-2xl p-6 modern-shadow hover-lift">
+      <h2 className="text-2xl font-display font-semibold mb-8 flex items-center text-foreground">
+        <CalendarIcon className="mr-3 h-6 w-6 text-primary" />
         {selectedDate ? format(selectedDate, 'MMMM d, yyyy') : 'Select a date'}
       </h2>
       
-      <div className="space-y-4 max-h-[400px] overflow-y-auto pr-1">
+      <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
         {todaysReminders.length > 0 ? (
           todaysReminders.map((reminder, index) => (
-            <div key={index} className="border border-white/20 rounded-md p-4 bg-secondary/30 backdrop-blur-sm hover:bg-secondary/40 transition-colors">
+            <div key={index} className="glass-card p-4 rounded-xl hover:bg-white/[0.08] transition-all duration-300 group">
               <div className="flex justify-between items-center">
-                <div>
-                  <p className="font-medium text-foreground">{reminder.time}</p>
-                  {reminder.note && <p className="text-sm text-muted-foreground">{reminder.note}</p>}
+                <div className="flex-1">
+                  <p className="font-semibold text-foreground text-lg mb-1">{reminder.time}</p>
+                  {reminder.note && (
+                    <p className="text-sm text-muted-foreground leading-relaxed">{reminder.note}</p>
+                  )}
                 </div>
                 <Button 
                   variant="outline" 
                   size="sm" 
                   onClick={() => playReminder(reminder.audioUrl)} 
-                  className="text-foreground"
+                  className="glass-button border-primary/20 text-primary hover:text-primary-foreground hover:bg-primary/90 ml-4 group-hover:scale-105 transition-all duration-300"
                 >
+                  <Play className="w-4 h-4 mr-1" />
                   Play
                 </Button>
               </div>
             </div>
           ))
         ) : (
-          <div className="flex flex-col items-center justify-center py-12">
-            <p className="text-muted-foreground text-center font-body mb-2">No reminders for this date</p>
-            <Button variant="outline" size="sm" onClick={onAddReminderClick} className="text-foreground">
+          <div className="flex flex-col items-center justify-center py-16">
+            <div className="w-20 h-20 rounded-full bg-muted/20 flex items-center justify-center mb-6">
+              <CalendarIcon className="w-8 h-8 text-muted-foreground" />
+            </div>
+            <p className="text-muted-foreground text-center font-medium mb-6 text-lg">
+              No reminders for this date
+            </p>
+            <Button 
+              variant="outline" 
+              onClick={onAddReminderClick} 
+              className="glass-button border-primary/30 text-primary hover:text-primary-foreground hover:bg-primary/90 transition-all duration-300 px-6 py-3 rounded-xl"
+            >
               <Plus className="mr-2 h-4 w-4" />
-              Add One
+              Add Your First Reminder
             </Button>
           </div>
         )}

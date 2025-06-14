@@ -5,10 +5,9 @@ import { Sun, Moon } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 export function ThemeToggle() {
-  const [isDarkMode, setIsDarkMode] = useState(true); // Default to dark mode
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const { toast } = useToast();
   
-  // Apply theme on initial load and when theme changes
   useEffect(() => {
     applyTheme(isDarkMode);
   }, [isDarkMode]);
@@ -22,21 +21,18 @@ export function ThemeToggle() {
   };
   
   const applyTheme = (dark: boolean) => {
-    // Apply theme by toggling CSS variables
     const root = document.documentElement;
     
     if (dark) {
-      // Dark theme (existing theme)
-      root.style.setProperty('--background', '240 10% 3.9%');
+      root.style.setProperty('--background', '240 6% 8%');
       root.style.setProperty('--foreground', '0 0% 98%');
-      root.style.setProperty('--primary', '0 0% 98%');
-      root.style.setProperty('--primary-foreground', '240 5.9% 10%');
-      root.style.setProperty('--secondary', '240 3.7% 15.9%');
+      root.style.setProperty('--primary', '217 91% 60%');
+      root.style.setProperty('--primary-foreground', '0 0% 98%');
+      root.style.setProperty('--secondary', '240 4% 16%');
     } else {
-      // Light theme
       root.style.setProperty('--background', '0 0% 100%');
       root.style.setProperty('--foreground', '240 10% 3.9%');
-      root.style.setProperty('--primary', '240 5.9% 10%');
+      root.style.setProperty('--primary', '217 91% 60%');
       root.style.setProperty('--primary-foreground', '0 0% 98%');
       root.style.setProperty('--secondary', '240 4.8% 95.9%');
     }
@@ -47,10 +43,13 @@ export function ThemeToggle() {
       variant="ghost"
       size="icon"
       onClick={toggleTheme}
-      className="rounded-full w-9 h-9 hover-scale"
+      className="glass-button w-12 h-12 hover:scale-105 transition-all duration-300"
       aria-label="Toggle theme"
     >
-      {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+      {isDarkMode ? 
+        <Sun className="h-5 w-5 text-primary" /> : 
+        <Moon className="h-5 w-5 text-primary" />
+      }
     </Button>
   );
 }

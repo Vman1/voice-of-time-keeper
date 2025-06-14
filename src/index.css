@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,61 +7,57 @@
 
 @layer base {
   :root {
-    --background: 240 10% 3.9%;
+    --background: 240 6% 8%;
     --foreground: 0 0% 98%;
 
-    --card: 240 10% 3.9%;
+    --card: 240 5% 10%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 240 10% 3.9%;
+    --popover: 240 5% 10%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 240 3.7% 15.9%;
+    --secondary: 240 4% 16%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted: 240 4% 16%;
+    --muted-foreground: 240 5% 65%;
 
-    --accent: 240 3.7% 15.9%;
+    --accent: 217 91% 60%;
     --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    --border: 240 4% 16%;
+    --input: 240 4% 16%;
+    --ring: 217 91% 60%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
-    --sidebar-background: 240 10% 3.9%;
+    --sidebar-background: 240 6% 8%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary: 217 91% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent: 240 4% 16%;
     --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-    
-    /* Transition for smooth theme switching */
-    transition: background-color 0.3s ease, color 0.3s ease;
+    --sidebar-border: 240 4% 16%;
+    --sidebar-ring: 217 91% 60%;
   }
 }
 
 @layer base {
   * {
-    @apply border-border selection:bg-white/10 selection:text-white;
+    @apply border-border selection:bg-primary/20 selection:text-primary-foreground;
   }
 
   body {
-    @apply bg-background text-foreground font-body;
-    transition: background-color 0.3s ease;
+    @apply bg-gradient-to-br from-background via-background to-background/90 text-foreground font-body;
+    background-attachment: fixed;
   }
   
-  /* Typography */
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
   }
@@ -69,42 +65,45 @@
 
 @layer utilities {
   .glass-card {
-    @apply backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.3)];
+    @apply backdrop-blur-xl bg-white/[0.02] border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.12)] rounded-2xl;
+    backdrop-filter: blur(20px);
   }
   
-  .text-gradient {
-    @apply bg-gradient-to-br from-white via-white/90 to-white/70 bg-clip-text text-transparent;
+  .glass-button {
+    @apply backdrop-blur-md bg-white/[0.05] border border-white/[0.1] hover:bg-white/[0.08] transition-all duration-300 rounded-xl;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent;
+  }
+  
+  .modern-shadow {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05);
   }
   
   .animate-fade-in {
-    animation: fadeIn 0.5s ease-out forwards;
+    animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   
   .animate-scale-in {
-    animation: scaleIn 0.4s ease-out forwards;
+    animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   
-  .animate-slide-in {
-    animation: slideIn 0.5s ease-out forwards;
+  .animate-slide-up {
+    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   
-  .hover-scale {
-    @apply transition-transform duration-200 hover:scale-105;
+  .hover-lift {
+    @apply transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1;
   }
   
-  /* New animations */
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
-  }
-  
-  .animate-pulse {
-    animation: pulse 1.5s ease-in-out infinite;
+  .modern-input {
+    @apply bg-white/[0.03] border-white/[0.08] focus:border-primary/50 focus:bg-white/[0.05] transition-all duration-300 rounded-xl;
   }
 }
 
-/* Font classes */
 .font-display {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 .font-body {
@@ -114,7 +113,7 @@
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(15px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -133,38 +132,13 @@
   }
 }
 
-@keyframes slideIn {
+@keyframes slideUp {
   from {
-    transform: translateX(-30px);
+    transform: translateY(30px);
     opacity: 0;
   }
   to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-/* New keyframe animations */
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-@keyframes pulse {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.6;
-  }
-  100% {
+    transform: translateY(0);
     opacity: 1;
   }
 }
